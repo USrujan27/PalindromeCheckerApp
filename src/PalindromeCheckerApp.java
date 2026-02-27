@@ -3,18 +3,15 @@ public class PalindromeCheckerApp {
     public static void main(String[] args)
     {
         String str = "madam"; // Hardcoded string
-        boolean isPalindrome = true;
+        String reversed = "";
 
-        int len = str.length();
-
-        for (int i = 0; i < len / 2; i++) {
-            if (str.charAt(i) != str.charAt(len - i - 1)) {
-                isPalindrome = false;
-                break;
-            }
+        // Reverse the string
+        for (int i = str.length() - 1; i >= 0; i--) {
+            reversed += str.charAt(i);
         }
 
-        if (isPalindrome) {
+        // Check if original and reversed strings are equal
+        if (str.equals(reversed)) {
             System.out.println("The string \"" + str + "\" is a palindrome.");
         } else {
             System.out.println("The string \"" + str + "\" is not a palindrome.");
