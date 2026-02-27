@@ -1,13 +1,20 @@
+
+import java.util.Stack;
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
         String str = "madam"; // Hardcoded string
-
-        char[] chars = str.toCharArray(); // Convert string to char array
+        Stack<Character> stack = new Stack<>();
         boolean isPalindrome = true;
 
-        for (int i = 0; i < chars.length / 2; i++) {
-            if (chars[i] != chars[chars.length - i - 1]) {
+        // Push all characters onto the stack
+        for (int i = 0; i < str.length(); i++) {
+            stack.push(str.charAt(i));
+        }
+
+        // Compare characters by popping from stack
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) != stack.pop()) {
                 isPalindrome = false;
                 break;
             }
@@ -19,6 +26,5 @@ public class PalindromeCheckerApp {
             System.out.println("The string \"" + str + "\" is not a palindrome.");
         }
     }
-
 
 }
