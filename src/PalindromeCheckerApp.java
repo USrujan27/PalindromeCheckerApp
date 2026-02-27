@@ -1,20 +1,26 @@
-
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
-public class PalindromeCheckerApp {
 
+public class PalindromeCheckerApp {
     public static void main(String[] args) {
         String str = "madam"; // Hardcoded string
+
+        Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
+
         boolean isPalindrome = true;
 
-        // Push all characters onto the stack
+        // Add characters to both queue and stack
         for (int i = 0; i < str.length(); i++) {
-            stack.push(str.charAt(i));
+            char ch = str.charAt(i);
+            queue.add(ch);   // FIFO order
+            stack.push(ch);  // LIFO order
         }
 
-        // Compare characters by popping from stack
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) != stack.pop()) {
+        // Compare elements from queue and stack
+        while (!queue.isEmpty()) {
+            if (queue.remove() != stack.pop()) {
                 isPalindrome = false;
                 break;
             }
@@ -26,5 +32,4 @@ public class PalindromeCheckerApp {
             System.out.println("The string \"" + str + "\" is not a palindrome.");
         }
     }
-
 }
