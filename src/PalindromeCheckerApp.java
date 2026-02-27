@@ -47,14 +47,27 @@ public class PalindromeCheckerApp {
         }
     }
 
-    // Main Method
+    // Method to measure execution time
+    public static void testStrategy(String name, PalindromeStrategy strategy, String str) {
+        PalindromeContext context = new PalindromeContext(strategy);
+
+        long startTime = System.nanoTime();
+        boolean result = context.checkPalindrome(str);
+        long endTime = System.nanoTime();
+
+        long duration = endTime - startTime;
+
+        System.out.println(name + ": " + result + " | Time = " + duration + " ns");
+    }
+
     public static void main(String[] args) {
-        String str = "madam"; // Hardcoded string
 
-        PalindromeContext context = new PalindromeContext(new ReverseStrategy());
-        System.out.println("Using Reverse Strategy: " + context.checkPalindrome(str));
+        // Test string (longer string for better comparison)
+        String str = "madamimadammadamimadammadamimadam";
 
-        context.setStrategy(new CompareStrategy());
-        System.out.println("Using Compare Strategy: " + context.checkPalindrome(str));
+        System.out.println("Performance Comparison:\n");
+
+        testStrategy("Reverse Strategy", new ReverseStrategy(), str);
+        testStrategy("Compare Strategy", new CompareStrategy(), str);
     }
 }
