@@ -1,28 +1,60 @@
 public class PalindromeCheckerApp {
-    public static void main(String[] args) {
-        String str = "A man a plan a canal Panama"; // Hardcoded string
 
-        // Remove spaces and convert to lowercase
-        String cleaned = str.replaceAll("\\s+", "").toLowerCase();
+    // Strategy Interface
+    interface PalindromeStrategy {
+        boolean isPalindrome(String str);
+    }
 
-        boolean isPalindrome = true;
-        int left = 0;
-        int right = cleaned.length() - 1;
+    // Reverse Strategy
+    static class ReverseStrategy implements PalindromeStrategy {
+        public boolean isPalindrome(String str) {
+            String reversed = new StringBuilder(str).reverse().toString();
+            return str.equals(reversed);
+        }
+    }
 
-        // Compare characters
-        while (left < right) {
-            if (cleaned.charAt(left) != cleaned.charAt(right)) {
-                isPalindrome = false;
-                break;
+    // Character Compare Strategy
+    static class CompareStrategy implements PalindromeStrategy {
+        public boolean isPalindrome(String str) {
+            int left = 0;
+            int right = str.length() - 1;
+
+            while (left < right) {
+                if (str.charAt(left) != str.charAt(right)) {
+                    return false;
+                }
+                left++;
+                right--;
             }
-            left++;
-            right--;
+            return true;
+        }
+    }
+
+    // Context Class
+    static class PalindromeContext {
+        private PalindromeStrategy strategy;
+
+        public PalindromeContext(PalindromeStrategy strategy) {
+            this.strategy = strategy;
         }
 
-        if (isPalindrome) {
-            System.out.println("\"" + str + "\" is a palindrome (ignoring case and spaces).");
-        } else {
-            System.out.println("\"" + str + "\" is not a palindrome.");
+        public void setStrategy(PalindromeStrategy strategy) {
+            this.strategy = strategy;
         }
+
+        public boolean checkPalindrome(String str) {
+            return strategy.isPalindrome(str);
+        }
+    }
+
+    // Main Method
+    public static void main(String[] args) {
+        String str = "madam"; // Hardcoded string
+
+        PalindromeContext context = new PalindromeContext(new ReverseStrategy());
+        System.out.println("Using Reverse Strategy: " + context.checkPalindrome(str));
+
+        context.setStrategy(new CompareStrategy());
+        System.out.println("Using Compare Strategy: " + context.checkPalindrome(str));
     }
 }
